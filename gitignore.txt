@@ -1,2 +1,0 @@
-3dshapes_autoencoder/shapes3d/
-3dshapes_autoencoder/downloads/
