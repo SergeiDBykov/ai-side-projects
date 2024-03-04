@@ -14,6 +14,10 @@ My projects in deep learning and AI.
 - [energAIser](https://github.com/SergeiDBykov/swarm_energAIser), A winning contribution to Siemens' Tech For Sustainability 2023 with time-series forecasting of energy consumption.
 
 
+- [Coursera ML](https://github.com/SergeiDBykov/ml-coursera-python-assignments), Coursera Machine Learning course by Andrew Ng with the implementation of basic algorithms and neural networks.
+
+- [Datacamp exam](https://github.com/SergeiDBykov/datacamp_practice_exam), practice exam for the certificate of "Data Scientist with Python" from Datacamp.
+
 # Materials
 
 - [Deep Learning](https://www.deeplearningbook.org), Ian Goodfellow and others
@@ -22,7 +26,4 @@ My projects in deep learning and AI.
 - [Machine learning](https://www.coursera.org/specializations/machine-learning-introduction), Andrew Ng (Coursera, now unavailable)
 - [Understanding Deep Learning](https://udlbook.github.io/udlbook/), Simon J.D. Prince
 
-- [Coursera ML](https://github.com/SergeiDBykov/ml-coursera-python-assignments), Coursera Machine Learning course by Andrew Ng with the implementation of basic algorithms and neural networks.
-
-- [Datacamp exam](https://github.com/SergeiDBykov/datacamp_practice_exam), practice exam for the certificate of "Data Scientist with Python" from Datacamp.
 
