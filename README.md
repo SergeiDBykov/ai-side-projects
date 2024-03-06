@@ -13,7 +13,7 @@ My little projects related to deep learning and AI
 
 - [Shapes 3D](https://github.com/SergeiDBykov/ai-side-projects/tree/main/3dshapes_autoencoder) - convolutional autoencoder on the 3d shapes dataset. I plan to add a variational autoencoder for generating new samples.
 - [Kitchenware Classification](https://github.com/SergeiDBykov/ai-side-projects/tree/main/kitchenware_classification) - classification of kitchenware items.
-- [Road segmentation model](https://github.com/SergeiDBykov/ai-side-projects/tree/main/road_segmentation) -- find a road on an image from a car.
+- [Road segmentation model](https://github.com/SergeiDBykov/ai-side-projects/tree/main/road_segmentation) - find a road on an image from a car.
 
 # My other ML projects
 
