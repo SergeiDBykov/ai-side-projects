@@ -25,5 +25,6 @@ Books and lectures I find useful.
 - [Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning), Andrew Ng and others (Coursera)
 - [Machine learning](https://www.coursera.org/specializations/machine-learning-introduction), Andrew Ng (Coursera, now unavailable)
 - [Understanding Deep Learning](https://udlbook.github.io/udlbook/), Simon J.D. Prince
+- [CS231n](http://cs231n.stanford.edu), Stanford Univ.
 
 
