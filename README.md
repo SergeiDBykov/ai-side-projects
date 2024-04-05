@@ -3,9 +3,10 @@ My projects in deep learning and AI.
 
 # Projects in this repository
 
-- [Shapes 3D](https://github.com/SergeiDBykov/ai-side-projects/tree/main/3dshapes_autoencoder) - convolutional autoencoder on the 3d shapes dataset. 
-- [Kitchenware Classification](https://github.com/SergeiDBykov/ai-side-projects/tree/main/kitchenware_classification) - classification of kitchenware items.
 - [Road segmentation model](https://github.com/SergeiDBykov/ai-side-projects/tree/main/road_segmentation) - find a road on an image from a car.
+- [Shapes 3D](https://github.com/SergeiDBykov/ai-side-projects/tree/main/3dshapes_autoencoder) - convolutional autoencoder on the 3d shapes dataset. 
+- [VAE synthetic data](https://github.com/SergeiDBykov/ai-side-projects/tree/main/VAE_synthetic_data) - Variational autoencoder on synthetic 1D and 2D data.
+- [Kitchenware Classification](https://github.com/SergeiDBykov/ai-side-projects/tree/main/kitchenware_classification) - classification of kitchenware items.
 
 # My Other ML projects
 
