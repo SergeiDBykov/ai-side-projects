@@ -18,14 +18,15 @@ def VAE_loss(recon_x, x, mu, logvar, KL_weight = 1.0):
 
 def VAE_train(model, dataloader, criterion, optimizer, epochs = 5, KL_weight = 1.0, device = 'cpu'):
 
-    for epoch in tqdm(range(epochs), desc='Epochs'):
+    pbar_epoch = tqdm(range(epochs), desc='Epochs')
+
+    for epoch in pbar_epoch:
         running_loss = 0.0
         running_KL = 0.0
         running_recon = 0.0
 
-        pbar = tqdm(enumerate(dataloader), total=len(dataloader), leave=False, desc='Training')
-        for i, (images, _) in pbar:
-        #for images, _ in dataloader:
+
+        for images, _ in dataloader:
             images = images.to(device)
 
             optimizer.zero_grad()
@@ -42,14 +43,14 @@ def VAE_train(model, dataloader, criterion, optimizer, epochs = 5, KL_weight = 1
             running_recon += RECON.item() * images.size(0)
             running_loss += loss.item() * images.size(0)
 
-            pbar.set_postfix({'Loss': running_loss / ((i+1) * dataloader.batch_size),
-                              'KL': running_KL / ((i+1) * dataloader.batch_size),
-                              'Recon': running_recon / ((i+1) * dataloader.batch_size)}, refresh=True)
+
 
         epoch_loss = running_loss / len(dataloader.dataset)
         epoch_KL = running_KL / len(dataloader.dataset)
         epoch_recon = running_recon / len(dataloader.dataset)
-        print(f"Epoch [{epoch+1}/{epochs}], Loss: {epoch_loss:.5f}, KL: {epoch_KL:.5f}, Recon: {epoch_recon:.5f}")    
+        #print(f"Epoch [{epoch+1}/{epochs}], Loss: {epoch_loss:.5f}, KL: {epoch_KL:.5f}, Recon: {epoch_recon:.5f}")    
+        #set postfix with .5f to limit the number of decimals
+        pbar_epoch.set_postfix({'Loss': f'{epoch_loss:.5f}', 'KL': f'{epoch_KL:.5f}', 'Recon': f'{epoch_recon:.5f}'})
 
 
 class GeometricFiguresDataset(torch.utils.data.Dataset):
@@ -212,3 +213,142 @@ def visualise_dataset(dataloader, model = None, device = 'cpu'):
 
         plt.show()
         return None
+
+ 
+
+# #calculate mu and log_var for the batch
+
+# x_input = next(iter(dataloader))[0][0:5]
+# x_input = x_input.to(device)
+
+# x_output = vae(x_input)[0]
+# _, mu, log_var = vae.encode(x_input)
+
+# sampled = vae.reparameterize(mu, log_var)
+# sampled_recon = vae.decode(sampled)
+
+# sampled_two = vae.reparameterize(mu, log_var)
+# sampled_recon_two = vae.decode(sampled_two)
+
+
+
+# plt.figure(figsize=(10, 5))
+# for i in range(5):
+#     plt.subplot(4, 5, i+1)
+#     plt.imshow(x_input[i].permute(1, 2, 0).cpu().detach().numpy())
+#     plt.xticks([])
+#     plt.yticks([])
+#     if i == 0:
+#         plt.ylabel('Input')
+
+#     plt.subplot(4, 5, i+6)
+#     plt.imshow(x_output[i].permute(1, 2, 0).cpu().detach().numpy())
+#     plt.xticks([])
+#     plt.yticks([])
+#     #plt.ylabel('Output') if model is not None else plt.ylabel('Input (repeat)')
+#     if i == 0:
+#         plt.ylabel('Model')
+    
+#     plt.subplot(4, 5, i+11)
+#     plt.imshow(sampled_recon[i].permute(1, 2, 0).cpu().detach().numpy())
+#     plt.xticks([])
+#     plt.yticks([])
+#     if i == 0:
+#         plt.ylabel('Sample #1')
+
+#     plt.subplot(4, 5, i+16)
+#     plt.imshow(sampled_recon_two[i].permute(1, 2, 0).cpu().detach().numpy())
+#     plt.xticks([])
+#     plt.yticks([])
+#     if i == 0:
+#         plt.ylabel('Sample #2')
+
+
+# #itnerpolate between two samples, lets say 0 and 1 from the input batch. plot the figure to that the left most is the first sample and the right most is the second sample, and the middle is the interpolated sample (linear interpolation in the latent space)
+
+# #interpolate between two samples
+# num_interpolations = 5
+# interpolations = torch.zeros(num_interpolations+2, sampled.shape[1]).to(device)
+# interpolations[0] = sampled[0]
+# interpolations[-1] = sampled[1]
+# for i in range(1, num_interpolations+1):
+#     interpolations[i] = sampled[0] + (sampled[1] - sampled[0]) * i / num_interpolations
+
+# interpolated_recon = vae.decode(interpolations)
+
+# plt.figure(figsize=(10, 5))
+# for i in range(num_interpolations+2):
+#     plt.subplot(1, num_interpolations+2, i+1)
+#     plt.imshow(interpolated_recon[i].permute(1, 2, 0).cpu().detach().numpy())
+#     plt.xticks([])
+#     plt.yticks([])
+#     if i == 0:
+#         plt.ylabel('Sample #1')
+#     if i == num_interpolations+1:
+#         plt.ylabel('Sample #2')
+
+
+
+def interpolate_samples(dataloader, model, device = 'cpu'):
+    x_input = next(iter(dataloader))[0][0:2]
+    x_input = x_input.to(device)
+
+    _, mu, log_var = model.encode(x_input)
+
+    sampled = model.reparameterize(mu, log_var)
+    sampled_recon = model.decode(sampled)
+
+    sampled_two = model.reparameterize(mu, log_var)
+    sampled_recon_two = model.decode(sampled_two)
+
+    plt.figure(figsize=(8, 8))
+    #plot 2 columns 3 rows, first row is the input, second row is the first sample, third row is the second sample
+
+    for i in range(2):
+        plt.subplot(3, 2, i+1)
+        plt.imshow(x_input[i].permute(1, 2, 0).cpu().detach().numpy())
+        plt.xticks([])
+        plt.yticks([])
+        if i == 0:
+            plt.ylabel('Input')
+
+        plt.subplot(3, 2, i+3)
+        plt.imshow(sampled_recon[i].permute(1, 2, 0).cpu().detach().numpy())
+        plt.xticks([])
+        plt.yticks([])
+        if i == 0:
+            plt.ylabel('Sample #1')
+
+        plt.subplot(3, 2, i+5)
+        plt.imshow(sampled_recon_two[i].permute(1, 2, 0).cpu().detach().numpy())
+        plt.xticks([])
+        plt.yticks([])
+        if i == 0:
+            plt.ylabel('Sample #2')
+    
+    #interpolate between two samples
+    num_interpolations = 7
+
+    interpolations = torch.zeros(num_interpolations+2, sampled.shape[1]).to(device)
+    interpolations[0] = sampled[0]
+    interpolations[-1] = sampled[1]
+    for i in range(1, num_interpolations+1):
+        interpolations[i] = sampled[0] + (sampled[1] - sampled[0]) * i / num_interpolations
+
+    interpolated_recon = model.decode(interpolations)
+
+    plt.figure(figsize=(10, 5))
+    for i in range(num_interpolations+2):
+        plt.subplot(3, 3, i+1)
+        plt.imshow(interpolated_recon[i].permute(1, 2, 0).cpu().detach().numpy())
+        plt.xticks([])
+        plt.yticks([])
+        if i == 0:
+            plt.title('Sample #1')
+        if i == num_interpolations+1:
+            plt.title('Sample #2')
+        if i !=0 and i != num_interpolations+1:
+            plt.title(f'Linear interpolation {i}/{num_interpolations}')
+
+    plt.show()
+    return None
