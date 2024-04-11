@@ -3,6 +3,8 @@ from matplotlib import pyplot as plt
 import numpy as np
 import torch
 import torch.nn.functional as F
+from tqdm import tqdm
+
 
 
 
@@ -16,12 +18,14 @@ def VAE_loss(recon_x, x, mu, logvar, KL_weight = 1.0):
 
 def VAE_train(model, dataloader, criterion, optimizer, epochs = 5, KL_weight = 1.0, device = 'cpu'):
 
-    for epoch in range(epochs):
+    for epoch in tqdm(range(epochs), desc='Epochs'):
         running_loss = 0.0
         running_KL = 0.0
         running_recon = 0.0
 
-        for images, _ in dataloader:
+        pbar = tqdm(enumerate(dataloader), total=len(dataloader), leave=False, desc='Training')
+        for i, (images, _) in pbar:
+        #for images, _ in dataloader:
             images = images.to(device)
 
             optimizer.zero_grad()
@@ -37,6 +41,10 @@ def VAE_train(model, dataloader, criterion, optimizer, epochs = 5, KL_weight = 1
             running_KL += KL.item() * images.size(0)
             running_recon += RECON.item() * images.size(0)
             running_loss += loss.item() * images.size(0)
+
+            pbar.set_postfix({'Loss': running_loss / ((i+1) * dataloader.batch_size),
+                              'KL': running_KL / ((i+1) * dataloader.batch_size),
+                              'Recon': running_recon / ((i+1) * dataloader.batch_size)}, refresh=True)
 
         epoch_loss = running_loss / len(dataloader.dataset)
         epoch_KL = running_KL / len(dataloader.dataset)
