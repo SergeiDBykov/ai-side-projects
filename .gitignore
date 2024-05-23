@@ -6,3 +6,4 @@ road_segmentation/.virtual_documents/
 VAE_synthetic_data/exeriments/data
 VAE_synthetic_data/data
 VAE_synthetic_data/tmp.ipynb
+contrastive_learning_mnist/data
