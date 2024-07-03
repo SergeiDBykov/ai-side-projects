@@ -5,7 +5,8 @@ My projects in deep learning and AI.
 # My standalone ML projects
 
 - [**Lockman hole**](https://github.com/SergeiDBykov/lockman_hole), Optical identification of astrophysical X-ray sources with the help of neural networks, based on [my paper](https://arxiv.org/abs/2302.13689).
-- [**energAIser**](https://github.com/SergeiDBykov/swarm_energAIser), A winning contribution to Siemens' Tech For Sustainability 2023 with time-series forecasting of energy consumption.
+- [**energAIser**](https://github.com/SergeiDBykov/swarm_energAIser), A winning contribution to Siemens' Tech For Sustainability 2023 hackathon with time-series forecasting of energy consumption.
+- [**Self Supervised Learning on Dark Matter halos**](https://github.com/SergeiDBykov/self_supervised_halos/tree/main), an ongoing project with application of self-supervised learning on (3D,2D) image and time series modalities and their alignment. 
 - [RevolutionAIze](https://github.com/LeoGitGuy/RevolutionAIze), a contribution to TUM AI's hackathon with computer vision-based satellite image classification for deforestation detection.
 - [BlindVision](https://github.com/m2rash/BlindVisionary), a contribution to Zeiss AG's Computer Vision hackathon with a neural network helping blind people during grocery shopping.
 - [Coursera ML](https://github.com/SergeiDBykov/ml-coursera-python-assignments), Coursera Machine Learning course by Andrew Ng with the implementation of basic algorithms and neural networks.
